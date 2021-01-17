@@ -1,0 +1,12 @@
+jsyntax = "proto3";
+
+package srcabl.shared;
+
+message SourceNode {
+
+    // Source is the source of this tree node
+    Source source = 1;
+
+    // Children are the 
+    repeated Source children = 2;
+}

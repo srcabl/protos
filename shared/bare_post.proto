@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package srcabl.shared;
+
+message BarePost {
+    message Comment {
+
+        // The primary content field of the post
+        string primary_content = 1;
+    }
+
+    // The uuid of the bare post
+    bytes uuid = 1;
+
+    // The main comment of the post
+    Comment comment = 2;
+
+    // The link provided in the post
+    string link = 3;
+}

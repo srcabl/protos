@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package srcabl.shared;
+
+message SourcedPost {
+
+    bytes uuid = 1;
+
+    bytes bare_post_uuid = 2;
+
+    SourceTree source_tree = 3;
+}

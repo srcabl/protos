@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package srcabl.shared;
+
+import "google/protobuf/timestamp.proto";
+
+message AuditFields {
+
+    // The user uuid that originally created the entity 
+    bytes created_by_uuid = 1;
+
+    // The user uuid that last updated the entity 
+    bytes updated_by_uuid = 2;
+
+    // The time the entity was created relative to epoc
+    google.protobuf.Timestamp created_at = 3;
+
+    // The time the entity was updated relative to epoc
+    google.protobuf.Timestamp updated_at = 4;
+}

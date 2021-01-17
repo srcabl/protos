@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package sourceable.sources;
+
+import "goolge/protobuf/empty.proto";
+
+service SourceService {
+
+    // HealthCheck is a basic healthcheck endpoint
+    rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+    rpc DetermineSource(DetermineSourceRequest) returns (DetermineSourceResponse) {}
+}
+
+
+
+message DetermineSourceRequest{
+
+    // The bare post that needs to haveits source determined
+    BarePost post = 1;
+}
+
+message DetermineSourceResponse {
+
+    // The post with the sourcing data
+    SourcedPost solurced_post = 1;
+}

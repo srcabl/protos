@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package srcabl.shared;
+
+message SourceTree {
+
+    SourceNode source_root = 1;
+}
