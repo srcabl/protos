@@ -1,6 +1,10 @@
-jsyntax = "proto3";
+syntax = "proto3";
 
 package srcabl.shared;
+
+option go_package ="github.com/srcabl/protos/shared";
+
+import "shared/source.proto";
 
 message SourceNode {
 

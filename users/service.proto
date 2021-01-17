@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package srcabl.users;
+
+option go_package ="github.com/srcabl/protos/users";
+
+import "google/protobuf/empty.proto";
+import "shared/user.proto";
+
+service UserService {
+
+    // HealthCheck is a basic healthcheck endpoint
+    rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+    rpc Login(LoginRequest) returns (LoginResponse) {}
+}
+
+
+
+message LoginRequest{
+
+    string username = 1;
+}
+
+message LoginResponse {
+
+    srcabl.shared.User user = 1;
+}

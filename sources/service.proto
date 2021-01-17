@@ -1,27 +1,31 @@
 syntax = "proto3";
 
-package sourceable.sources;
+package srcabl.sources;
 
-import "goolge/protobuf/empty.proto";
+option go_package ="github.com/srcabl/protos/sources";
+
+import "google/protobuf/empty.proto";
+import "shared/bare_post.proto";
+import "shared/sourced_post.proto";
 
 service SourceService {
 
     // HealthCheck is a basic healthcheck endpoint
     rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
-    rpc DetermineSource(DetermineSourceRequest) returns (DetermineSourceResponse) {}
+    rpc DeterminePostSource(DeterminePostSourceRequest) returns (DeterminePostSourceResponse) {}
 }
 
 
 
-message DetermineSourceRequest{
+message DeterminePostSourceRequest{
 
     // The bare post that needs to haveits source determined
-    BarePost post = 1;
+    srcabl.shared.BarePost post = 1;
 }
 
-message DetermineSourceResponse {
+message DeterminePostSourceResponse {
 
     // The post with the sourcing data
-    SourcedPost solurced_post = 1;
+    srcabl.shared.SourcedPost solurced_post = 1;
 }

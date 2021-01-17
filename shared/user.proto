@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package srcabl.shared;
+
+option go_package ="github.com/srcabl/protos/shared";
+
+message User {
+
+    string username = 1;
+}
+    

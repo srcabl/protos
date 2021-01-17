@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package srcabl.shared;
 
+option go_package ="github.com/srcabl/protos/shared";
+
+import "shared/source_tree.proto";
+
 message SourcedPost {
 
     bytes uuid = 1;
