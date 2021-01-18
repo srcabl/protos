@@ -22,6 +22,9 @@ service PostsService {
 
     // Gets the list of posts
     rpc GetPostsList(GetPostsListRequest) returns (GetPostsListResponse) {}
+
+    // Deletes a post
+    rpc DeletePost(DeletePostRequest) returns (DeletePostResponse) {}
 }
 
 // CreatePostRequest defines what is needed to create a post
@@ -58,4 +61,14 @@ message GetPostsListResponse {
 
     // The posts of the request
     repeated srcabl.shared.SourcedPost posts = 1;
+}
+
+// DeletePostRequest defines what is needed to delete as post
+message DeletePostRequest {
+
+}
+
+// DeletePostResponse returns the results of DeletePost
+message DeletePostResponse {
+
 }

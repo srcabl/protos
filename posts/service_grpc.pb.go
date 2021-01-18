@@ -27,6 +27,8 @@ type PostsServiceClient interface {
 	StartPostsList(ctx context.Context, in *StartPostsListRequest, opts ...grpc.CallOption) (*StartPostsListResponse, error)
 	// Gets the list of posts
 	GetPostsList(ctx context.Context, in *GetPostsListRequest, opts ...grpc.CallOption) (*GetPostsListResponse, error)
+	// Deletes a post
+	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
 }
 
 type postsServiceClient struct {
@@ -73,6 +75,15 @@ func (c *postsServiceClient) GetPostsList(ctx context.Context, in *GetPostsListR
 	return out, nil
 }
 
+func (c *postsServiceClient) DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error) {
+	out := new(DeletePostResponse)
+	err := c.cc.Invoke(ctx, "/srcable.posts.PostsService/DeletePost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PostsServiceServer is the server API for PostsService service.
 // All implementations must embed UnimplementedPostsServiceServer
 // for forward compatibility
@@ -85,6 +96,8 @@ type PostsServiceServer interface {
 	StartPostsList(context.Context, *StartPostsListRequest) (*StartPostsListResponse, error)
 	// Gets the list of posts
 	GetPostsList(context.Context, *GetPostsListRequest) (*GetPostsListResponse, error)
+	// Deletes a post
+	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)
 	mustEmbedUnimplementedPostsServiceServer()
 }
 
@@ -103,6 +116,9 @@ func (UnimplementedPostsServiceServer) StartPostsList(context.Context, *StartPos
 }
 func (UnimplementedPostsServiceServer) GetPostsList(context.Context, *GetPostsListRequest) (*GetPostsListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPostsList not implemented")
+}
+func (UnimplementedPostsServiceServer) DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
 }
 func (UnimplementedPostsServiceServer) mustEmbedUnimplementedPostsServiceServer() {}
 
@@ -189,6 +205,24 @@ func _PostsService_GetPostsList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PostsService_DeletePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostsServiceServer).DeletePost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcable.posts.PostsService/DeletePost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostsServiceServer).DeletePost(ctx, req.(*DeletePostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PostsService_ServiceDesc is the grpc.ServiceDesc for PostsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -211,6 +245,10 @@ var PostsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPostsList",
 			Handler:    _PostsService_GetPostsList_Handler,
+		},
+		{
+			MethodName: "DeletePost",
+			Handler:    _PostsService_DeletePost_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
