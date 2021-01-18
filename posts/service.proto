@@ -15,13 +15,13 @@ service PostsService {
     rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
     // Creates a Post
-    rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+    rpc CreatePost(CreatePostRequest) returns (CreatePostResponse) {}
 
     // Starts the lisitng of posts
-    rpc StartPostsList(StartPostsListRequest) returns (StartPostsListResponse);
+    rpc StartPostsList(StartPostsListRequest) returns (StartPostsListResponse) {}
 
     // Gets the list of posts
-    rpc GetPostsList(GetPostsListRequest) returns (GetPostsListResponse);
+    rpc GetPostsList(GetPostsListRequest) returns (GetPostsListResponse) {}
 }
 
 // CreatePostRequest defines what is needed to create a post
