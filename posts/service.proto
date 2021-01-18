@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package srcable.posts;
 
-option go_package ="github.com/srcabl/protos/shared";
+option go_package ="github.com/srcabl/protos/posts";
 
 import "shared/bare_post.proto";
 import "shared/sourced_post.proto";
