@@ -4,17 +4,22 @@ package srcabl.shared;
 
 option go_package ="github.com/srcabl/protos/shared";
 
+import "shared/audit_fields.proto";
+
 message Source {
     
     // The UUID of the source
     bytes uuid = 1;
+    
+    // The audit fields for the source
+    AuditFields audit_fields = 2;
 
     // The name of the source
-    string name = 2;
+    string name = 3;
 
     // The organization of the source
-    string organization = 3;
+    string organization = 4;
 
     // The rating of the source
-    int32 rating = 4;
+    int32 credability = 5;
 }

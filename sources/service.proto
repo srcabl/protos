@@ -16,8 +16,6 @@ service SourceService {
     rpc DeterminePostSource(DeterminePostSourceRequest) returns (DeterminePostSourceResponse) {}
 }
 
-
-
 message DeterminePostSourceRequest{
 
     // The bare post that needs to haveits source determined

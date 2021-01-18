@@ -4,6 +4,8 @@ package srcabl.shared;
 
 option go_package ="github.com/srcabl/protos/shared";
 
+import "shared/audit_fields.proto";
+
 message BarePost {
     message Comment {
 
@@ -14,9 +16,12 @@ message BarePost {
     // The uuid of the bare post
     bytes uuid = 1;
 
+    // The audit fields of the post
+    AuditFields audit_fields = 2;
+
     // The main comment of the post
-    Comment comment = 2;
+    Comment comment = 3;
 
     // The link provided in the post
-    string link = 3;
+    string link = 4;
 }

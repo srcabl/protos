@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package srcable.posts;
+
+option go_package ="github.com/srcabl/protos/shared";
+
+import "shared/bare_post.proto";
+import "shared/sourced_post.proto";
+
+service PostsService {
+
+    rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+
+    rpc StartPostsList(StartPostsListRequest) returns (StartPostsListResponse);
+
+    rpc GetPostsList(GetPostsListRequest) returns (GetPostsListResponse);
+}
+
+message CreatePostRequest {
+    
+    srcabl.shared.BarePost post = 1;
+}
+
+message CreatePostResponse {
+
+    srcabl.shared.SourcedPost post = 1;
+}
+
+message StartPostsListRequest {
+
+    int32 page_size = 1;
+}
+
+message StartPostsListResponse {
+
+}
+
+message GetPostsListRequest {
+
+}
+
+message GetPostsListResponse {
+
+    repeated srcabl.shared.SourcedPost posts = 1;
+}
