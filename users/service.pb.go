@@ -22,11 +22,13 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// LoginRequest defines what is needed for a log in
 type LoginRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The user's name
 	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 }
 
@@ -69,6 +71,7 @@ func (x *LoginRequest) GetUsername() string {
 	return ""
 }
 
+// LoginResponse returns the results of Login
 type LoginResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

@@ -6,6 +6,7 @@ option go_package ="github.com/srcabl/protos/shared";
 
 import "shared/audit_fields.proto";
 
+// Source defines the fields of a source
 message Source {
     
     // The UUID of the source
@@ -20,6 +21,6 @@ message Source {
     // The organization of the source
     string organization = 4;
 
-    // The rating of the source
-    int32 credability = 5;
+    // The credibility of the source
+    int32 credibility = 5;
 }

@@ -21,6 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// AuditFields defines created and updated data
 type AuditFields struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

@@ -6,6 +6,7 @@ option go_package ="github.com/srcabl/protos/shared";
 
 import "google/protobuf/timestamp.proto";
 
+// AuditFields defines created and updated data
 message AuditFields {
 
     // The user uuid that originally created the entity 

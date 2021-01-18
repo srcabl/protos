@@ -1,0 +1,13 @@
+
+syntax = "proto3";
+
+package srcabl.shared;
+
+option go_package ="github.com/srcabl/protos/shared";
+
+// PostLink defines the base link inputs on a users post
+message PostLink {
+
+    // The link of the post
+    string link = 1;
+}

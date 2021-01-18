@@ -5,13 +5,11 @@ package srcabl.shared;
 option go_package ="github.com/srcabl/protos/shared";
 
 import "shared/audit_fields.proto";
+import "shared/post_comment.proto";
+import "shared/post_link.proto";
 
+// BarePost defines the base user inputs for a post
 message BarePost {
-    message Comment {
-
-        // The primary content field of the post
-        string primary_content = 1;
-    }
 
     // The uuid of the bare post
     bytes uuid = 1;
@@ -20,8 +18,9 @@ message BarePost {
     AuditFields audit_fields = 2;
 
     // The main comment of the post
-    Comment comment = 3;
+    PostComment comment = 3;
 
     // The link provided in the post
-    string link = 4;
+    PostLink link = 4;
 }
+

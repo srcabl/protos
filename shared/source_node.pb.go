@@ -20,6 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// SourceNode defines a node pointing the a source and children of the source for a given post
 type SourceNode struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

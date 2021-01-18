@@ -4,8 +4,10 @@ package srcabl.shared;
 
 option go_package ="github.com/srcabl/protos/shared";
 
+// User defines the fields of a user
 message User {
 
+    // Username is the user's name
     string username = 1;
 }
     

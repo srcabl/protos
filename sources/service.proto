@@ -5,25 +5,29 @@ package srcabl.sources;
 option go_package ="github.com/srcabl/protos/sources";
 
 import "google/protobuf/empty.proto";
-import "shared/bare_post.proto";
-import "shared/sourced_post.proto";
+import "shared/post_link.proto";
+import "shared/source_node.proto";
 
+// SourceService defines the behavir of a service managing the sourcing
 service SourceService {
 
     // HealthCheck is a basic healthcheck endpoint
     rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
+    // DeterminePostSource determines the source of a post
     rpc DeterminePostSource(DeterminePostSourceRequest) returns (DeterminePostSourceResponse) {}
 }
 
+// DeterminePostSourceRequest defines what is needed to source a post
 message DeterminePostSourceRequest{
 
-    // The bare post that needs to haveits source determined
-    srcabl.shared.BarePost post = 1;
+    // The link that needs to have its source determined
+    srcabl.shared.PostLink link = 1;
 }
 
+// DeterminePostSourceResponse returns the results of DeterminePostSource
 message DeterminePostSourceResponse {
 
-    // The post with the sourcing data
-    srcabl.shared.SourcedPost solurced_post = 1;
+    // The links source node
+    srcabl.shared.SourceNode source_node = 1;
 }

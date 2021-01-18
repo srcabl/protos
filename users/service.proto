@@ -15,13 +15,14 @@ service UserService {
     rpc Login(LoginRequest) returns (LoginResponse) {}
 }
 
-
-
+// LoginRequest defines what is needed for a log in
 message LoginRequest{
 
+    // The user's name
     string username = 1;
 }
 
+// LoginResponse returns the results of Login
 message LoginResponse {
 
     srcabl.shared.User user = 1;

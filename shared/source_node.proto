@@ -6,6 +6,7 @@ option go_package ="github.com/srcabl/protos/shared";
 
 import "shared/source.proto";
 
+// SourceNode defines a node pointing the a source and children of the source for a given post
 message SourceNode {
 
     // Source is the source of this tree node

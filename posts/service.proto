@@ -4,42 +4,58 @@ package srcable.posts;
 
 option go_package ="github.com/srcabl/protos/posts";
 
+import "google/protobuf/empty.proto";
 import "shared/bare_post.proto";
 import "shared/sourced_post.proto";
 
+// PostService defines the behavior of a service managing posts
 service PostsService {
 
+    // HealthCheck is a basic healthcheck endpoint
+    rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+    // Creates a Post
     rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
 
+    // Starts the lisitng of posts
     rpc StartPostsList(StartPostsListRequest) returns (StartPostsListResponse);
 
+    // Gets the list of posts
     rpc GetPostsList(GetPostsListRequest) returns (GetPostsListResponse);
 }
 
+// CreatePostRequest defines what is needed to create a post
 message CreatePostRequest {
     
+    // Post is the bare post needed to be sourced and commited
     srcabl.shared.BarePost post = 1;
 }
 
+// CreatePostResponse returns the results of CreatePost
 message CreatePostResponse {
 
+    // Post is the sourced and committed post
     srcabl.shared.SourcedPost post = 1;
 }
 
+// StartPostsListRequest defines what is needed to start a listing of posts
 message StartPostsListRequest {
 
-    int32 page_size = 1;
 }
 
+// StartPostsListResponse returns the results of StartPostsList
 message StartPostsListResponse {
 
 }
 
+// GetPostsListRequest defines what is needed to get a list of posts
 message GetPostsListRequest {
 
 }
 
+// GetPostsListResponse returns the results of GetPostsList
 message GetPostsListResponse {
 
+    // The posts of the request
     repeated srcabl.shared.SourcedPost posts = 1;
 }
