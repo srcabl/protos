@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package srcable.posts;
+package srcabl.posts;
 
 option go_package ="github.com/srcabl/protos/posts";
 
 import "google/protobuf/empty.proto";
-import "shared/bare_post.proto";
-import "shared/sourced_post.proto";
+import "shared/post.proto";
+import "shared/link.proto";
 
 // PostService defines the behavior of a service managing posts
 service PostsService {
@@ -14,53 +14,135 @@ service PostsService {
     // HealthCheck is a basic healthcheck endpoint
     rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
-    // Creates a Post
-    rpc CreatePost(CreatePostRequest) returns (CreatePostResponse) {}
+    // Gets post
+    rpc GetPost(GetPostRequest) returns (GetPostResponse) {}
 
-    // Starts the lisitng of posts
-    rpc StartPostsList(StartPostsListRequest) returns (StartPostsListResponse) {}
+    // Gets link
+    rpc GetLink(GetLinkRequest) returns (GetLinkResponse) {}
 
     // Gets the list of posts
-    rpc GetPostsList(GetPostsListRequest) returns (GetPostsListResponse) {}
+    rpc ListUsersPosts(ListUsersPostsRequest) returns (ListUsersPostsResponse) {}
+
+    // Creates a link
+    rpc CreateLink(CreateLinkRequest) returns (CreateLinkResponse) {}
+
+    // Creates a Post
+    rpc CreatePost(CreatePostRequest) returns (CreatePostResponse) {}
 
     // Deletes a post
     rpc DeletePost(DeletePostRequest) returns (DeletePostResponse) {}
 }
 
+// GetPostRequest defines what is needed to get a post
+message GetPostRequest {
+
+    // The uuid of the post
+    bytes post_uuid = 1;
+}
+
+// GetPostResponse returns the results of GetPost
+message GetPostResponse {
+
+    // The post of the request
+    srcabl.shared.Post post = 1;
+}
+
+// GetLinkRequest defines what is needed to get a link
+message GetLinkRequest {
+
+    // The uuid of the link if we are getting by uuid
+    bytes link_uuid = 1;
+
+    // The url if we are getting by the url
+    string url = 2;
+
+    // Enum defining the possible attributes we can get a link by
+    enum GetBy {
+        // UNKNOWN is the invalid value
+        UNKNOWN = 0;
+        // UUID indicates we are getting a link by it's uuid
+        UUID = 1;
+        // URL indicates we are getting a link by it's url
+        URL = 2;
+    }
+
+    // The value indicating by what attribute we are getting a link
+    GetBy getBy = 3;
+}
+
+// GetLinkResponse returns the results of GetLink
+message GetLinkResponse {
+
+    // The link of the request
+    srcabl.shared.Link link = 1;
+}
+
+// ListUsersPostsRequest defines what is needed to get a list of posts
+message ListUsersPostsRequest {
+
+    // The user uuid of the posts we are getting
+    bytes user_uuid = 1;
+
+    // The page size of the response.  This is to be used on the first call to set all
+    // page sizes for all subsequent calls.
+    uint32 init_page_size = 2;
+
+    // The page token for the request.  This is a base64 encoded token used
+    // for all requests after the initial call.
+    string page_token = 3;
+}
+
+// ListUsersPostsResponse returns the results of ListUsersPosts
+message ListUsersPostsResponse {
+
+    // The posts of the request
+    repeated srcabl.shared.Post posts = 1;
+
+    // The corresponding links for the posts
+    repeated srcabl.shared.Link links = 2;
+
+    // The page token to be used to retrive the next page.  This is a base 64 encoded token.
+    string next_page_token = 3;
+}
+
+// CreateLinkRequest defines what is needed to create a link
+message CreateLinkRequest {
+
+    // The url of the link
+    string url = 1;
+
+    // The heads of the link's source tree
+    repeated bytes source_head_uuids = 2;
+}
+
+// CreateLinkResponse returns the results of CreateLink
+message CreateLinkResponse {
+
+    // The created link
+    srcabl.shared.Link link = 1;
+}
+
 // CreatePostRequest defines what is needed to create a post
 message CreatePostRequest {
     
-    // Post is the bare post needed to be sourced and commited
-    srcabl.shared.BarePost post = 1;
+    // The uuid of the user creating the post
+    bytes user_uuid = 1;
+
+    // The uuid of the sourced link of the post
+    bytes link_uuid = 2;
+
+    // The title of the post
+    string title = 3;
+
+    // The user comment of the post
+    string comment = 4;
 }
 
 // CreatePostResponse returns the results of CreatePost
 message CreatePostResponse {
 
-    // Post is the sourced and committed post
-    srcabl.shared.SourcedPost post = 1;
-}
-
-// StartPostsListRequest defines what is needed to start a listing of posts
-message StartPostsListRequest {
-
-}
-
-// StartPostsListResponse returns the results of StartPostsList
-message StartPostsListResponse {
-
-}
-
-// GetPostsListRequest defines what is needed to get a list of posts
-message GetPostsListRequest {
-
-}
-
-// GetPostsListResponse returns the results of GetPostsList
-message GetPostsListResponse {
-
-    // The posts of the request
-    repeated srcabl.shared.SourcedPost posts = 1;
+    // The created post
+    srcabl.shared.Post post= 1;
 }
 
 // DeletePostRequest defines what is needed to delete as post

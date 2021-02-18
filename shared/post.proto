@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package srcabl.shared;
+
+option go_package ="github.com/srcabl/protos/shared";
+
+import "shared/audit_fields.proto";
+
+// Post defines the components of a post
+message Post {
+
+    // The uuid of the post
+    bytes uuid = 1;
+
+    // The audit fields of the post
+    AuditFields audit_fields = 3;
+
+    // The uuid of the user that created the post
+    bytes user_uuid = 2;
+
+    // The uuid of the link provided in the post
+    bytes link_uuid = 4;
+
+    // PostComment defines the base comment inputs on a users post
+    message PostComment {
+
+        // The title of the post
+        string title = 1;
+
+        // The primary content field of the post
+        string primary_content = 2;
+    }
+
+    // The main comment of the post
+    PostComment comment = 5;
+}
+

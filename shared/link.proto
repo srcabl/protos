@@ -1,0 +1,27 @@
+
+syntax = "proto3";
+
+package srcabl.shared;
+
+option go_package ="github.com/srcabl/protos/shared";
+
+import "shared/audit_fields.proto";
+
+// Link defines the base link inputs on a users post
+message Link {
+
+    // The link id
+    bytes uuid  = 1;
+
+    // The audit fields of the post
+    AuditFields audit_fields = 2;
+
+    // The url of the link
+    string url = 3;
+
+    // The head nodes of the source tree
+    // These nodes represent the primary sources of the link
+    // A link with multiple sources can occure in the case of an 
+    // article with multiple authors
+    repeated bytes source_heads = 4;
+}

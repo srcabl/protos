@@ -4,10 +4,35 @@ package srcabl.shared;
 
 option go_package ="github.com/srcabl/protos/shared";
 
+import "shared/audit_fields.proto";
+
 // User defines the fields of a user
 message User {
 
+    // Uuid is the user's id
+    bytes uuid = 1;
+
+    //AuditFields are all of the audit related fields of thed user
+    AuditFields audit_fields = 2;
+
     // Username is the user's name
-    string username = 1;
+    string username = 3;
+
+    // Email is the user's email
+    string email = 4;
+
+    // HashedPassword is the user's hashed password
+    string hashed_passsword = 5;
+
+    message UserDetails {
+
+        // DisplayName is the is the user selected name
+        string display_name = 1;
+
+        // Description is the user selected description
+        string decription = 2;
+    }
+
+    // UserDetails is the users selected details 
+    UserDetails details = 6;
 }
-    

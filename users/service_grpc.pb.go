@@ -15,124 +15,354 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserServiceClient is the client API for UserService service.
+// UsersServiceClient is the client API for UsersService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserServiceClient interface {
+type UsersServiceClient interface {
 	// HealthCheck is a basic healthcheck endpoint
 	HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	// GetUser gets a user
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	// Follow adds a follower
+	Follow(ctx context.Context, in *FollowRequest, opts ...grpc.CallOption) (*FollowResponse, error)
+	// UnFollow removes a follower
+	UnFollow(ctx context.Context, in *FollowRequest, opts ...grpc.CallOption) (*FollowResponse, error)
+	// ValidateUser gets a user
+	ValidateUserCredentials(ctx context.Context, in *ValidateUserCredentialsRequest, opts ...grpc.CallOption) (*ValidateUserCredentialsResponse, error)
+	// CreateUser creates a user
+	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	// UpdateUser updates a user
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
+	// DeleteUser deletes a user
+	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
 }
 
-type userServiceClient struct {
+type usersServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
-	return &userServiceClient{cc}
+func NewUsersServiceClient(cc grpc.ClientConnInterface) UsersServiceClient {
+	return &usersServiceClient{cc}
 }
 
-func (c *userServiceClient) HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *usersServiceClient) HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/srcabl.users.UserService/HealthCheck", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/HealthCheck", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
-	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, "/srcabl.users.UserService/Login", in, out, opts...)
+func (c *usersServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+	out := new(GetUserResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserServiceServer is the server API for UserService service.
-// All implementations must embed UnimplementedUserServiceServer
+func (c *usersServiceClient) Follow(ctx context.Context, in *FollowRequest, opts ...grpc.CallOption) (*FollowResponse, error) {
+	out := new(FollowResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/Follow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersServiceClient) UnFollow(ctx context.Context, in *FollowRequest, opts ...grpc.CallOption) (*FollowResponse, error) {
+	out := new(FollowResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/UnFollow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersServiceClient) ValidateUserCredentials(ctx context.Context, in *ValidateUserCredentialsRequest, opts ...grpc.CallOption) (*ValidateUserCredentialsResponse, error) {
+	out := new(ValidateUserCredentialsResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/ValidateUserCredentials", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersServiceClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
+	out := new(CreateUserResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/CreateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersServiceClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/UpdateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
+	out := new(DeleteUserResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.users.UsersService/DeleteUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UsersServiceServer is the server API for UsersService service.
+// All implementations must embed UnimplementedUsersServiceServer
 // for forward compatibility
-type UserServiceServer interface {
+type UsersServiceServer interface {
 	// HealthCheck is a basic healthcheck endpoint
 	HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	mustEmbedUnimplementedUserServiceServer()
+	// GetUser gets a user
+	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	// Follow adds a follower
+	Follow(context.Context, *FollowRequest) (*FollowResponse, error)
+	// UnFollow removes a follower
+	UnFollow(context.Context, *FollowRequest) (*FollowResponse, error)
+	// ValidateUser gets a user
+	ValidateUserCredentials(context.Context, *ValidateUserCredentialsRequest) (*ValidateUserCredentialsResponse, error)
+	// CreateUser creates a user
+	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	// UpdateUser updates a user
+	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
+	// DeleteUser deletes a user
+	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	mustEmbedUnimplementedUsersServiceServer()
 }
 
-// UnimplementedUserServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedUserServiceServer struct {
+// UnimplementedUsersServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUsersServiceServer struct {
 }
 
-func (UnimplementedUserServiceServer) HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+func (UnimplementedUsersServiceServer) HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
 }
-func (UnimplementedUserServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+func (UnimplementedUsersServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
+func (UnimplementedUsersServiceServer) Follow(context.Context, *FollowRequest) (*FollowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Follow not implemented")
+}
+func (UnimplementedUsersServiceServer) UnFollow(context.Context, *FollowRequest) (*FollowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnFollow not implemented")
+}
+func (UnimplementedUsersServiceServer) ValidateUserCredentials(context.Context, *ValidateUserCredentialsRequest) (*ValidateUserCredentialsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateUserCredentials not implemented")
+}
+func (UnimplementedUsersServiceServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedUsersServiceServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedUsersServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedUsersServiceServer) mustEmbedUnimplementedUsersServiceServer() {}
 
-// UnsafeUserServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UserServiceServer will
+// UnsafeUsersServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UsersServiceServer will
 // result in compilation errors.
-type UnsafeUserServiceServer interface {
-	mustEmbedUnimplementedUserServiceServer()
+type UnsafeUsersServiceServer interface {
+	mustEmbedUnimplementedUsersServiceServer()
 }
 
-func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
-	s.RegisterService(&UserService_ServiceDesc, srv)
+func RegisterUsersServiceServer(s grpc.ServiceRegistrar, srv UsersServiceServer) {
+	s.RegisterService(&UsersService_ServiceDesc, srv)
 }
 
-func _UserService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsersService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).HealthCheck(ctx, in)
+		return srv.(UsersServiceServer).HealthCheck(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/srcabl.users.UserService/HealthCheck",
+		FullMethod: "/srcabl.users.UsersService/HealthCheck",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).HealthCheck(ctx, req.(*emptypb.Empty))
+		return srv.(UsersServiceServer).HealthCheck(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
+func _UsersService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).Login(ctx, in)
+		return srv.(UsersServiceServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/srcabl.users.UserService/Login",
+		FullMethod: "/srcabl.users.UsersService/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).Login(ctx, req.(*LoginRequest))
+		return srv.(UsersServiceServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
+func _UsersService_Follow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FollowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).Follow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.users.UsersService/Follow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).Follow(ctx, req.(*FollowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UsersService_UnFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FollowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).UnFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.users.UsersService/UnFollow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).UnFollow(ctx, req.(*FollowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UsersService_ValidateUserCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateUserCredentialsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).ValidateUserCredentials(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.users.UsersService/ValidateUserCredentials",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).ValidateUserCredentials(ctx, req.(*ValidateUserCredentialsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UsersService_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).CreateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.users.UsersService/CreateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).CreateUser(ctx, req.(*CreateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UsersService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.users.UsersService/UpdateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).UpdateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UsersService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServiceServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.users.UsersService/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// UsersService_ServiceDesc is the grpc.ServiceDesc for UsersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "srcabl.users.UserService",
-	HandlerType: (*UserServiceServer)(nil),
+var UsersService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "srcabl.users.UsersService",
+	HandlerType: (*UsersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "HealthCheck",
-			Handler:    _UserService_HealthCheck_Handler,
+			Handler:    _UsersService_HealthCheck_Handler,
 		},
 		{
-			MethodName: "Login",
-			Handler:    _UserService_Login_Handler,
+			MethodName: "GetUser",
+			Handler:    _UsersService_GetUser_Handler,
+		},
+		{
+			MethodName: "Follow",
+			Handler:    _UsersService_Follow_Handler,
+		},
+		{
+			MethodName: "UnFollow",
+			Handler:    _UsersService_UnFollow_Handler,
+		},
+		{
+			MethodName: "ValidateUserCredentials",
+			Handler:    _UsersService_ValidateUserCredentials_Handler,
+		},
+		{
+			MethodName: "CreateUser",
+			Handler:    _UsersService_CreateUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _UsersService_UpdateUser_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _UsersService_DeleteUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

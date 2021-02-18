@@ -13,5 +13,5 @@ message SourceNode {
     Source source = 1;
 
     // Children are the 
-    repeated Source children = 2;
+    repeated SourceNode children = 2;
 }

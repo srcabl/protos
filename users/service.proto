@@ -4,26 +4,161 @@ package srcabl.users;
 
 option go_package ="github.com/srcabl/protos/users";
 
+import "google/protobuf/field_mask.proto";
 import "google/protobuf/empty.proto";
 import "shared/user.proto";
 
-service UserService {
+service UsersService {
 
     // HealthCheck is a basic healthcheck endpoint
     rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
-    rpc Login(LoginRequest) returns (LoginResponse) {}
+    // GetUser gets a user
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+
+    // Follow adds a follower
+    rpc Follow(FollowRequest) returns (FollowResponse) {}
+
+    // UnFollow removes a follower
+    rpc UnFollow(FollowRequest) returns (FollowResponse) {}
+
+    // ValidateUser gets a user
+    rpc ValidateUserCredentials(ValidateUserCredentialsRequest) returns (ValidateUserCredentialsResponse) {}
+
+    // CreateUser creates a user
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+
+    // UpdateUser updates a user 
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+
+    // DeleteUser deletes a user
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
 }
 
-// LoginRequest defines what is needed for a log in
-message LoginRequest{
+// GetUserRequest defines what is needed to get a user
+message GetUserRequest{
 
-    // The user's name
-    string username = 1;
+    // Uuid is the user's uuid
+    bytes uuid = 1;  
 }
 
-// LoginResponse returns the results of Login
-message LoginResponse {
+// GetUserResponse returns the results of GetUser
+message GetUserResponse {
 
+    // User is the requested user
     srcabl.shared.User user = 1;
+}
+
+// FollowRequest defines what is needed to represent a follower-followed relationship
+message FollowRequest {
+
+    // The follower
+    bytes follower_uuid = 1;
+
+    // The followed
+    bytes followed_uuid = 2;
+
+    // Enum defining the type which is the followed
+    enum FollowedType {
+        // UNKNOWN is the invalid vlaue
+        UNKNOWN = 0;
+        // USER specified that the followed is a user
+        USER = 1;
+        // USER specified that the followed is a source
+        SOURCE = 2;
+    }
+
+    // The type which is followed
+    FollowedType type = 3;
+}
+
+// FollowResponse returns the results of FOllow and Unfollow
+message FollowResponse {}
+
+// ValidateUserCredentialsRequest defines what is needed to validate a user's credentials
+message ValidateUserCredentialsRequest {
+
+    // Username is the user's name
+    string username = 1;
+
+    // Email is the user's email
+    string email = 2;
+
+    // ValidateUserBy enumerates the field to be used to Validate the user
+    enum ValidateUserBy {
+        UNKNOWN = 0;
+        USERNAME = 1;
+        EMAIL = 2;
+    }
+
+    // ValidateUserBy is the enum value indicating with what field to Validate the user by
+    ValidateUserBy Validate_user_by = 3; 
+
+    // Password is the user's hashed password
+    string password = 4;
+}
+
+// ValidateUserCredentialsResponse returns the results of ValidateUserCredentials
+message ValidateUserCredentialsResponse {
+
+    // IsValid indicates if the user's credentials have been verified successfully
+    bool is_valid = 1;
+
+    // User is the verified user
+    srcabl.shared.User user = 2;
+}
+
+// CreateUserRequest defines what is needed to create a user
+message CreateUserRequest {
+
+    // The user name
+    string username = 1;
+
+    // The user's email
+    string email = 2;
+
+    // The user's hashed password 
+    string hashed_passsword = 3;
+
+    // The user's display name
+    string display_name = 4;
+
+    // The user's description
+    string description = 5;
+}
+
+// CreateUserResponse returns the results of CreateUser
+message CreateUserResponse {
+
+    // User is the uuid of the created User
+    srcabl.shared.User user = 1;
+}
+
+// UpdateUserRequest defines what is needed to update a user
+message UpdateUserRequest {
+
+    // User is the user to update
+    srcabl.shared.User user = 1;
+
+    //FieldMasks specify what fields to update on the user
+    google.protobuf.FieldMask field_masks = 2;
+}
+
+// UpdateUserResponse returns the results of UpdateUser
+message UpdateUserResponse {
+
+    // User is the modified user
+    srcabl.shared.User user = 1;
+}
+
+// DeleteUserRequest defines what is needed to delete a user
+message DeleteUserRequest {
+
+    //Uuid is the uuid if the user to delete
+    bytes uuid = 1;
+}
+
+// DeleteUserResponse returns the results of DeleteUser
+message DeleteUserResponse {
+    // placeholder in case there is something to return in the future
 }

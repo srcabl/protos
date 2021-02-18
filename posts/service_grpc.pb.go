@@ -21,12 +21,16 @@ const _ = grpc.SupportPackageIsVersion7
 type PostsServiceClient interface {
 	// HealthCheck is a basic healthcheck endpoint
 	HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Gets post
+	GetPost(ctx context.Context, in *GetPostRequest, opts ...grpc.CallOption) (*GetPostResponse, error)
+	// Gets link
+	GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error)
+	// Gets the list of posts
+	ListUsersPosts(ctx context.Context, in *ListUsersPostsRequest, opts ...grpc.CallOption) (*ListUsersPostsResponse, error)
+	// Creates a link
+	CreateLink(ctx context.Context, in *CreateLinkRequest, opts ...grpc.CallOption) (*CreateLinkResponse, error)
 	// Creates a Post
 	CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*CreatePostResponse, error)
-	// Starts the lisitng of posts
-	StartPostsList(ctx context.Context, in *StartPostsListRequest, opts ...grpc.CallOption) (*StartPostsListResponse, error)
-	// Gets the list of posts
-	GetPostsList(ctx context.Context, in *GetPostsListRequest, opts ...grpc.CallOption) (*GetPostsListResponse, error)
 	// Deletes a post
 	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
 }
@@ -41,7 +45,43 @@ func NewPostsServiceClient(cc grpc.ClientConnInterface) PostsServiceClient {
 
 func (c *postsServiceClient) HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/srcable.posts.PostsService/HealthCheck", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/HealthCheck", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postsServiceClient) GetPost(ctx context.Context, in *GetPostRequest, opts ...grpc.CallOption) (*GetPostResponse, error) {
+	out := new(GetPostResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/GetPost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postsServiceClient) GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error) {
+	out := new(GetLinkResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/GetLink", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postsServiceClient) ListUsersPosts(ctx context.Context, in *ListUsersPostsRequest, opts ...grpc.CallOption) (*ListUsersPostsResponse, error) {
+	out := new(ListUsersPostsResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/ListUsersPosts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postsServiceClient) CreateLink(ctx context.Context, in *CreateLinkRequest, opts ...grpc.CallOption) (*CreateLinkResponse, error) {
+	out := new(CreateLinkResponse)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/CreateLink", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,25 +90,7 @@ func (c *postsServiceClient) HealthCheck(ctx context.Context, in *emptypb.Empty,
 
 func (c *postsServiceClient) CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*CreatePostResponse, error) {
 	out := new(CreatePostResponse)
-	err := c.cc.Invoke(ctx, "/srcable.posts.PostsService/CreatePost", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *postsServiceClient) StartPostsList(ctx context.Context, in *StartPostsListRequest, opts ...grpc.CallOption) (*StartPostsListResponse, error) {
-	out := new(StartPostsListResponse)
-	err := c.cc.Invoke(ctx, "/srcable.posts.PostsService/StartPostsList", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *postsServiceClient) GetPostsList(ctx context.Context, in *GetPostsListRequest, opts ...grpc.CallOption) (*GetPostsListResponse, error) {
-	out := new(GetPostsListResponse)
-	err := c.cc.Invoke(ctx, "/srcable.posts.PostsService/GetPostsList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/CreatePost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +99,7 @@ func (c *postsServiceClient) GetPostsList(ctx context.Context, in *GetPostsListR
 
 func (c *postsServiceClient) DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error) {
 	out := new(DeletePostResponse)
-	err := c.cc.Invoke(ctx, "/srcable.posts.PostsService/DeletePost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/srcabl.posts.PostsService/DeletePost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,12 +112,16 @@ func (c *postsServiceClient) DeletePost(ctx context.Context, in *DeletePostReque
 type PostsServiceServer interface {
 	// HealthCheck is a basic healthcheck endpoint
 	HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	// Gets post
+	GetPost(context.Context, *GetPostRequest) (*GetPostResponse, error)
+	// Gets link
+	GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error)
+	// Gets the list of posts
+	ListUsersPosts(context.Context, *ListUsersPostsRequest) (*ListUsersPostsResponse, error)
+	// Creates a link
+	CreateLink(context.Context, *CreateLinkRequest) (*CreateLinkResponse, error)
 	// Creates a Post
 	CreatePost(context.Context, *CreatePostRequest) (*CreatePostResponse, error)
-	// Starts the lisitng of posts
-	StartPostsList(context.Context, *StartPostsListRequest) (*StartPostsListResponse, error)
-	// Gets the list of posts
-	GetPostsList(context.Context, *GetPostsListRequest) (*GetPostsListResponse, error)
 	// Deletes a post
 	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)
 	mustEmbedUnimplementedPostsServiceServer()
@@ -108,14 +134,20 @@ type UnimplementedPostsServiceServer struct {
 func (UnimplementedPostsServiceServer) HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
 }
+func (UnimplementedPostsServiceServer) GetPost(context.Context, *GetPostRequest) (*GetPostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPost not implemented")
+}
+func (UnimplementedPostsServiceServer) GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLink not implemented")
+}
+func (UnimplementedPostsServiceServer) ListUsersPosts(context.Context, *ListUsersPostsRequest) (*ListUsersPostsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsersPosts not implemented")
+}
+func (UnimplementedPostsServiceServer) CreateLink(context.Context, *CreateLinkRequest) (*CreateLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateLink not implemented")
+}
 func (UnimplementedPostsServiceServer) CreatePost(context.Context, *CreatePostRequest) (*CreatePostResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePost not implemented")
-}
-func (UnimplementedPostsServiceServer) StartPostsList(context.Context, *StartPostsListRequest) (*StartPostsListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartPostsList not implemented")
-}
-func (UnimplementedPostsServiceServer) GetPostsList(context.Context, *GetPostsListRequest) (*GetPostsListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPostsList not implemented")
 }
 func (UnimplementedPostsServiceServer) DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
@@ -143,10 +175,82 @@ func _PostsService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/srcable.posts.PostsService/HealthCheck",
+		FullMethod: "/srcabl.posts.PostsService/HealthCheck",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PostsServiceServer).HealthCheck(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PostsService_GetPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostsServiceServer).GetPost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.posts.PostsService/GetPost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostsServiceServer).GetPost(ctx, req.(*GetPostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PostsService_GetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostsServiceServer).GetLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.posts.PostsService/GetLink",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostsServiceServer).GetLink(ctx, req.(*GetLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PostsService_ListUsersPosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersPostsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostsServiceServer).ListUsersPosts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.posts.PostsService/ListUsersPosts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostsServiceServer).ListUsersPosts(ctx, req.(*ListUsersPostsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PostsService_CreateLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostsServiceServer).CreateLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/srcabl.posts.PostsService/CreateLink",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostsServiceServer).CreateLink(ctx, req.(*CreateLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -161,46 +265,10 @@ func _PostsService_CreatePost_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/srcable.posts.PostsService/CreatePost",
+		FullMethod: "/srcabl.posts.PostsService/CreatePost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PostsServiceServer).CreatePost(ctx, req.(*CreatePostRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PostsService_StartPostsList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StartPostsListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PostsServiceServer).StartPostsList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/srcable.posts.PostsService/StartPostsList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PostsServiceServer).StartPostsList(ctx, req.(*StartPostsListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PostsService_GetPostsList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPostsListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PostsServiceServer).GetPostsList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/srcable.posts.PostsService/GetPostsList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PostsServiceServer).GetPostsList(ctx, req.(*GetPostsListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -215,7 +283,7 @@ func _PostsService_DeletePost_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/srcable.posts.PostsService/DeletePost",
+		FullMethod: "/srcabl.posts.PostsService/DeletePost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PostsServiceServer).DeletePost(ctx, req.(*DeletePostRequest))
@@ -227,7 +295,7 @@ func _PostsService_DeletePost_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PostsService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "srcable.posts.PostsService",
+	ServiceName: "srcabl.posts.PostsService",
 	HandlerType: (*PostsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -235,16 +303,24 @@ var PostsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PostsService_HealthCheck_Handler,
 		},
 		{
+			MethodName: "GetPost",
+			Handler:    _PostsService_GetPost_Handler,
+		},
+		{
+			MethodName: "GetLink",
+			Handler:    _PostsService_GetLink_Handler,
+		},
+		{
+			MethodName: "ListUsersPosts",
+			Handler:    _PostsService_ListUsersPosts_Handler,
+		},
+		{
+			MethodName: "CreateLink",
+			Handler:    _PostsService_CreateLink_Handler,
+		},
+		{
 			MethodName: "CreatePost",
 			Handler:    _PostsService_CreatePost_Handler,
-		},
-		{
-			MethodName: "StartPostsList",
-			Handler:    _PostsService_StartPostsList_Handler,
-		},
-		{
-			MethodName: "GetPostsList",
-			Handler:    _PostsService_GetPostsList_Handler,
 		},
 		{
 			MethodName: "DeletePost",

@@ -5,29 +5,66 @@ package srcabl.sources;
 option go_package ="github.com/srcabl/protos/sources";
 
 import "google/protobuf/empty.proto";
-import "shared/post_link.proto";
 import "shared/source_node.proto";
+import "shared/source.proto";
 
 // SourceService defines the behavir of a service managing the sourcing
-service SourceService {
+service SourcesService {
 
     // HealthCheck is a basic healthcheck endpoint
     rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
-    // DeterminePostSource determines the source of a post
-    rpc DeterminePostSource(DeterminePostSourceRequest) returns (DeterminePostSourceResponse) {}
+    // DetermineLinkSource determines the source of a link
+    rpc DetermineLinkSource(DetermineLinkSourceRequest) returns (DetermineLinkSourceResponse) {}
+
+    //GetSource gets a source
+    rpc GetSource(GetSourceRequest) returns (GetSourceResponse) {}
+
+    // CreateSource creates a source
+    rpc CreateSource(CreateSourceRequest) returns (CreateSourceRequest) {}
 }
 
-// DeterminePostSourceRequest defines what is needed to source a post
-message DeterminePostSourceRequest{
+// DetermineLinkSourceRequest defines what is needed to source a link
+message DetermineLinkSourceRequest{
 
-    // The link that needs to have its source determined
-    srcabl.shared.PostLink link = 1;
+    // The url that needs to have its source determined
+    string url = 1;
 }
 
-// DeterminePostSourceResponse returns the results of DeterminePostSource
-message DeterminePostSourceResponse {
+// DetermineLinkSourceResponse returns the results of DetermineLinkSource
+message DetermineLinkSourceResponse {
 
-    // The links source node
-    srcabl.shared.SourceNode source_node = 1;
+    // The links source node 
+    repeated srcabl.shared.SourceNode primary_source_nodes = 1;
+}
+
+// GetSourceRequest defines whast is needed to get a source
+message GetSourceRequest {
+
+    // The uuid od the source
+    bytes source_uuid = 1;
+}
+
+// GetSouceResponse returns the results of GetSource
+message GetSourceResponse {
+
+    // The source of the request
+    srcabl.shared.Source source = 1;
+}
+
+// CreateSourceRequest defines what is need to create a source
+message CreateSourceRequest {
+
+    // The name of the source
+    string name = 1;
+
+    // The organization the source is associated with
+    string organization = 2;
+}
+
+// CreataeSourceResponse returns the result of CreateSource
+message CreateSourceResponse {
+
+    // The created source
+    srcabl.shared.Source source = 1;
 }
